@@ -1,0 +1,5 @@
+export const INPUT_CHANGE = "INPUT_CHANGE";
+export const FETCH_MOVIES = "FETCH_MOVIES";
+export const CLEAR_INPUT = "CLEAR_INPUT";
+export const SET_CUTTENT_PAGE = "SET_CURRENT_PAGE";
+export const FETCH_NEXT_PAGE = "FETCH_NEXT_PAGE";

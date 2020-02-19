@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { connect } from "react-redux";
 
 const StyledWrapper = styled.section`
   width: 100vw;
@@ -89,15 +90,16 @@ const StyledWrapper = styled.section`
   }
 `;
 
-const SearchSection = ({ searchedMovie, setSearchedMovie, handleSearch }) => {
+const SearchSection = ({ inputValue, handleSearch, handleInputChange }) => {
   return (
     <>
       <StyledWrapper>
+        {console.log(inputValue)}
         <form>
           <input
             required
-            value={searchedMovie}
-            onChange={e => setSearchedMovie(e.target.value.toUpperCase())}
+            value={inputValue}
+            onChange={handleInputChange}
             type="text"
             placeholder="Wpisz tytuł szukanego filmu..."
           />
@@ -110,4 +112,18 @@ const SearchSection = ({ searchedMovie, setSearchedMovie, handleSearch }) => {
   );
 };
 
-export default SearchSection;
+const mapStateToProps = state => {
+  return {
+    inputValue: state.inputValue
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleInputChange: e => {
+      dispatch({ type: "INPUT_CHANGE", value: e.target.value.toUpperCase() });
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchSection);

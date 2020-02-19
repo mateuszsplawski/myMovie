@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import MovieCard from "../../MovieCard/MovieCard";
 import InfiniteScroll from "react-infinite-scroller";
+import { connect } from "react-redux";
 
 const StyledWrapper = styled.section`
   width: 100%;
@@ -24,43 +25,27 @@ const StyledWrapper = styled.section`
 `;
 
 const DisplaySection = ({
-  filteredMovies,
-  setFilteredMovies,
-  currentSearch
+  movies,
+  inputValue,
+  currentPage,
+  setCurrentPage,
+  fetchNextPage
 }) => {
-  let [currentPage, setCurrentPage] = useState(1);
-
   useEffect(() => {
-    if (filteredMovies !== undefined && filteredMovies.length > 10) {
-      setCurrentPage(currentPage + 1);
-    } else if (filteredMovies !== undefined) {
-      setCurrentPage(2);
-    } else {
-      setCurrentPage(1);
-    }
-  }, [filteredMovies]);
-
+    setCurrentPage(movies, currentPage);
+  }, []);
   return (
     <>
       <StyledWrapper>
-        {filteredMovies !== undefined && (
+        {movies !== undefined && (
           <InfiniteScroll
             element="ul"
             pageStart={0}
-            loadMore={() => {
-              const key = "f086697e";
-              fetch(
-                `https://www.omdbapi.com/?i=tt3896198&apikey=${key}&type=movie&s=${currentSearch}&page=${currentPage}`
-              )
-                .then(result => result.json())
-                .then(data =>
-                  setFilteredMovies(filteredMovies.concat([...data.Search]))
-                )
-                .catch(err => console.log(err));
-            }}
+            loadMore={fetchNextPage(inputValue, currentPage)}
             hasMore={true || false}
           >
-            {filteredMovies.map((movie, id) => (
+            {console.log(movies)}
+            {movies.map((movie, id) => (
               <MovieCard id={id} movie={movie} />
             ))}
           </InfiniteScroll>
@@ -70,4 +55,37 @@ const DisplaySection = ({
   );
 };
 
-export default DisplaySection;
+const mapStateToProps = state => {
+  return {
+    movies: state.movies,
+    inputValue: state.inputValue,
+    currentPage: state.currentPage
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setCurrentPage: (movies, currentPage) => {
+      if (movies !== undefined && movies.length > 10) {
+        dispatch({ type: "SET_CURRENT_PAGE", number: currentPage + 1 });
+      } else if (movies !== undefined) {
+        dispatch({ type: "SET_CURRENT_PAGE", number: 2 });
+      } else {
+        dispatch({ type: "SET_CURRENT_PAGE", number: 1 });
+      }
+    },
+    fetchNextPage: (inputValue, currentPage) => {
+      const key = "f086697e";
+      fetch(
+        `https://www.omdbapi.com/?i=tt3896198&apikey=${key}&type=movie&s=${inputValue}&page=${currentPage}`
+      )
+        .then(result => result.json())
+        .then(data =>
+          dispatch({ type: "FETCH_NEXT_PAGE", data: [...data.Search] })
+        )
+        .catch(err => console.log(err));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DisplaySection);

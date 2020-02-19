@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import DisplaySection from "./sections/DisplaySection/DisplaySection";
 import SearchSection from "./sections/SearchSection/SearchSection";
+import { connect } from "react-redux";
 
 const StyledWrapper = styled.main`
   @import url("https://fonts.googleapis.com/css?family=Exo:800&display=swap");
@@ -80,41 +81,19 @@ const StyledWrapper = styled.main`
   }
 `;
 
-const MoviesApp = () => {
-  const [searchedMovie, setSearchedMovie] = useState("");
-  const [currentSearch, setCurrentSearch] = useState("");
-  const [filteredMovies, setFilteredMovies] = useState(undefined);
-
-  useEffect(() => {
-    const key = "f086697e";
-    fetch(
-      `https://www.omdbapi.com/?i=tt3896198&apikey=${key}&type=movie&s=${currentSearch}`
-    )
-      .then(result => result.json())
-      .then(data => setFilteredMovies(data.Search))
-      .catch(err => console.log(err));
-  }, [currentSearch]);
-
+const MoviesApp = ({ inputValue, handleClick, movies }) => {
   const handleSearch = e => {
     e.preventDefault();
-    if (searchedMovie !== "") {
-      setCurrentSearch(searchedMovie);
-    } else if (currentSearch !== searchedMovie && searchedMovie !== "") {
-      setFilteredMovies(undefined);
-      setCurrentSearch(searchedMovie);
-    } else {
-      alert("Musisz wpisać tytuł szukanego filmu!");
-    }
-    setSearchedMovie("");
+    handleClick(inputValue);
   };
 
   return (
-    <StyledWrapper displayMode={filteredMovies}>
+    <StyledWrapper displayMode={movies}>
       <div className="innerWrapper">
         <header>
           <h1>mo.vie</h1>
         </header>
-        {!filteredMovies && (
+        {!movies && (
           <>
             <div className="heroText">
               <h2>
@@ -123,22 +102,39 @@ const MoviesApp = () => {
                 Sprawdź to!
               </h2>
             </div>
-            <SearchSection
-              searchedMovie={searchedMovie}
-              setSearchedMovie={setSearchedMovie}
-              handleSearch={handleSearch}
-            />
+            <SearchSection handleSearch={handleSearch} />
           </>
         )}
-        {filteredMovies && (
-          <DisplaySection
-            currentSearch={currentSearch}
-            setFilteredMovies={setFilteredMovies}
-            filteredMovies={filteredMovies}
-          />
-        )}
+        {movies && <DisplaySection />}
       </div>
     </StyledWrapper>
   );
 };
-export default MoviesApp;
+
+const mapStateToProps = state => {
+  return {
+    inputValue: state.inputValue,
+    movies: state.movies
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleClick: inputValue => {
+      if (inputValue !== "") {
+        const key = "f086697e";
+        fetch(
+          `https://www.omdbapi.com/?i=tt3896198&apikey=${key}&type=movie&s=${inputValue}`
+        )
+          .then(result => result.json())
+          .then(data => dispatch({ type: "FETCH_MOVIES", data: data.Search }))
+          // .then(dispatch({ type: "CLEAR_INPUT" }))
+          .catch(err => console.log(err));
+      } else if (inputValue === "") {
+        alert("Musisz wpisać tytuł szukanego filmu!");
+      }
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MoviesApp);
