@@ -33,7 +33,7 @@ const DisplaySection = ({
 }) => {
   useEffect(() => {
     setCurrentPage(movies, currentPage);
-  }, []);
+  }, [movies]);
   return (
     <>
       <StyledWrapper>
@@ -41,9 +41,10 @@ const DisplaySection = ({
           <InfiniteScroll
             element="ul"
             pageStart={0}
-            loadMore={fetchNextPage(inputValue, currentPage)}
+            loadMore={() => fetchNextPage(inputValue, currentPage)}
             hasMore={true || false}
           >
+            {console.log(currentPage)}
             {console.log(movies)}
             {movies.map((movie, id) => (
               <MovieCard id={id} movie={movie} />

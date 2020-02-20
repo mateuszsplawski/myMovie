@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import DisplaySection from "./sections/DisplaySection/DisplaySection";
 import SearchSection from "./sections/SearchSection/SearchSection";
