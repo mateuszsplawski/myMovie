@@ -44,8 +44,6 @@ const DisplaySection = ({
             loadMore={() => fetchNextPage(inputValue, currentPage)}
             hasMore={true || false}
           >
-            {console.log(currentPage)}
-            {console.log(movies)}
             {movies.map((movie, id) => (
               <MovieCard id={id} movie={movie} />
             ))}

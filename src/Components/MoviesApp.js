@@ -3,6 +3,7 @@ import styled from "styled-components";
 import DisplaySection from "./sections/DisplaySection/DisplaySection";
 import SearchSection from "./sections/SearchSection/SearchSection";
 import { connect } from "react-redux";
+import Logo from "./Logo/Logo";
 
 const StyledWrapper = styled.main`
   @import url("https://fonts.googleapis.com/css?family=Exo:800&display=swap");
@@ -90,9 +91,7 @@ const MoviesApp = ({ inputValue, handleClick, movies }) => {
   return (
     <StyledWrapper displayMode={movies}>
       <div className="innerWrapper">
-        <header>
-          <h1>mo.vie</h1>
-        </header>
+        <Logo displayMode={movies} />
         {!movies && (
           <>
             <div className="heroText">

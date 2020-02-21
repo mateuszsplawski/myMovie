@@ -1,62 +1,71 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import Logo from "../Logo/Logo";
 
-const StyledWrapper = styled.section`
+const StyledWrapper = styled.main`
   background-color: #080808;
   color: white;
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
 
-  div {
-    margin-top: 20px;
+  section {
+    margin-top: 50px;
     display: flex;
+    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-around;
 
-    img {
-      width: 40%;
-      object-fit: cover;
-    }
-
-    ul {
-      padding: 25px 0 25px 25px;
+    div {
+      margin-top: 20px;
       display: flex;
-      flex-direction: column;
+      align-items: center;
       justify-content: space-around;
-      li {
-        padding: 10px;
-        list-style: none;
-        border-radius: 10px;
-        position: relative;
-        margin-top: 25px;
-        min-width: 170px;
-        span {
-          position: absolute;
-          top: -20px;
-          left: 10px;
-          color: #fcbf49;
+
+      img {
+        width: 40%;
+        object-fit: cover;
+      }
+
+      ul {
+        padding: 25px 0 25px 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        li {
+          padding: 10px;
+          list-style: none;
+          border-radius: 10px;
+          position: relative;
+          margin-top: 25px;
+          min-width: 170px;
+          span {
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            color: #fcbf49;
+          }
         }
       }
     }
-  }
 
-  @media (max-width: 450px) {
-    h1 {
-      font-size: 20px;
-    }
-    div {
-      flex-direction: column;
+    @media (max-width: 450px) {
+      h1 {
+        font-size: 20px;
+      }
+      div {
+        flex-direction: column;
 
-      ul {
-        padding: 0;
-        li {
-          min-width: none;
-          text-align: center;
-          font-size: 12px;
+        ul {
+          padding: 0;
+          li {
+            min-width: none;
+            text-align: center;
+            font-size: 12px;
+          }
         }
       }
     }
@@ -78,32 +87,35 @@ const MovieDetails = ({ match }) => {
 
   return (
     <StyledWrapper>
-      <h1>{movie}</h1>
-      <div>
-        <img src={movieDetails.Poster} alt="plakat" />
-        <ul>
-          <li>
-            <span>Tytuł</span>
-            {movieDetails && movieDetails.Title}
-          </li>
-          <li>
-            <span>Rok powstania</span>
-            {movieDetails && movieDetails.Year}
-          </li>
-          <li>
-            <span>Pierwszy raz w kinach</span>
-            {movieDetails && movieDetails.Released}
-          </li>
-          <li>
-            <span>Długość trwania</span>
-            {movieDetails && movieDetails.Runtime}
-          </li>
-          <li>
-            <span>Reżyser</span>
-            {movieDetails && movieDetails.Director}
-          </li>
-        </ul>
-      </div>
+      <Logo position />
+      <section>
+        <h1>{movie}</h1>
+        <div>
+          <img src={movieDetails.Poster} alt="plakat" />
+          <ul>
+            <li>
+              <span>Tytuł</span>
+              {movieDetails && movieDetails.Title}
+            </li>
+            <li>
+              <span>Rok powstania</span>
+              {movieDetails && movieDetails.Year}
+            </li>
+            <li>
+              <span>Pierwszy raz w kinach</span>
+              {movieDetails && movieDetails.Released}
+            </li>
+            <li>
+              <span>Długość trwania</span>
+              {movieDetails && movieDetails.Runtime}
+            </li>
+            <li>
+              <span>Reżyser</span>
+              {movieDetails && movieDetails.Director}
+            </li>
+          </ul>
+        </div>
+      </section>
     </StyledWrapper>
   );
 };
