@@ -78,7 +78,7 @@ const MovieDetails = ({ match }) => {
   useEffect(() => {
     const key = "f086697e";
     fetch(
-      `http://www.omdbapi.com/?i=tt3896198&apikey=${key}&type=movie&t=${movie}`
+      `https://www.omdbapi.com/?i=tt3896198&apikey=${key}&type=movie&t=${movie}`
     )
       .then(result => result.json())
       .then(data => setMovieDetails(data))

@@ -23,6 +23,11 @@ const StyledLi = styled.li`
       transform: scale(1.1);
     }
   }
+
+  @media (max-width: 600px) {
+    width: 300px;
+    height: 400px;
+  }
 `;
 
 const MovieCard = ({ movie, id }) => {
