@@ -126,8 +126,11 @@ const mapDispatchToProps = dispatch => {
           `https://www.omdbapi.com/?i=tt3896198&apikey=${key}&type=movie&s=${inputValue}`
         )
           .then(result => result.json())
-          .then(data => dispatch({ type: "FETCH_MOVIES", data: data.Search }))
-          // .then(dispatch({ type: "CLEAR_INPUT" }))
+          .then(data =>
+            data.Response === "True"
+              ? dispatch({ type: "FETCH_MOVIES", data: data.Search })
+              : alert("Brak wyników, spróbuj ponownie.")
+          )
           .catch(err => console.log(err));
       } else if (inputValue === "") {
         alert("Musisz wpisać tytuł szukanego filmu!");

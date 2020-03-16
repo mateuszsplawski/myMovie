@@ -10,14 +10,14 @@ const StyledWrapper = styled.main`
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
 
   section {
-    margin-top: 50px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    margin: 30px 0 0 0;
 
     div {
       margin-top: 20px;
@@ -26,7 +26,7 @@ const StyledWrapper = styled.main`
       justify-content: space-around;
 
       img {
-        width: 40%;
+        width: 60%;
         object-fit: cover;
       }
 
@@ -42,10 +42,13 @@ const StyledWrapper = styled.main`
           position: relative;
           margin-top: 25px;
           min-width: 170px;
+
           span {
             position: absolute;
             top: -20px;
             left: 10px;
+            font-size: 18px;
+            white-space: nowrap;
             color: #fcbf49;
           }
         }
@@ -53,8 +56,11 @@ const StyledWrapper = styled.main`
     }
 
     @media (max-width: 450px) {
+      padding: 20px;
+
       h1 {
-        font-size: 20px;
+        font-size: 24px;
+        text-align: center;
       }
       div {
         flex-direction: column;
@@ -64,7 +70,7 @@ const StyledWrapper = styled.main`
           li {
             min-width: none;
             text-align: center;
-            font-size: 12px;
+            font-size: 16px;
           }
         }
       }
