@@ -9,7 +9,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Live version
 
 My project is being build and deployed thanks to Netlify.
-[https://nostalgic-knuth-77c39f.netlify.com/]
+[https://mymoviereactapp.netlify.com]
 
 ### Installing
 
